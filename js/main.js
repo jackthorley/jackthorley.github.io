@@ -1,115 +1,30 @@
-/**
- * Sets up Justified Gallery.
- */
-if (!!$.prototype.justifiedGallery) {
-  var options = {
-    rowHeight: 140,
-    margins: 4,
-    lastRow: "justify"
-  };
-  $(".article-gallery").justifiedGallery(options);
-}
+(function () {
 
 
-$(document).ready(function() {
+  async function getElec() {
+    const response = await fetch("https://api.octopus.energy/v1/products/SILVER-FLEX-22-11-25/electricity-tariffs/E-1R-SILVER-FLEX-22-11-25-B/standard-unit-rates/");
+    const elec = await response.json();
+    return elec;
+  }
 
-  /**
-   * Shows the responsive navigation menu on mobile.
-   */
-  $("#header > #nav > ul > .icon").click(function() {
-    $("#header > #nav > ul").toggleClass("responsive");
+  async function getGas() {
+    const response = await fetch("https://api.octopus.energy/v1/products/SILVER-FLEX-22-11-25/gas-tariffs/G-1R-SILVER-FLEX-22-11-25-B/standard-unit-rates/");
+    const elec = await response.json();
+    return elec;
+  }
+
+  getElec().then(elecValues => {
+    var elec = document.getElementById("elec")
+    var date = new Date(elecValues.results[0].valid_to).toDateString();
+
+    elec.innerText = `${elecValues.results[0].value_inc_vat}p on date ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
   });
 
+  getGas().then(gasValues => {
+    var gas = document.getElementById("gas")
+    var date = new Date(gasValues.results[0].valid_to).toDateString();
 
-  /**
-   * Controls the different versions of  the menu in blog post articles 
-   * for Desktop, tablet and mobile.
-   */
-  if ($(".post").length) {
-    var menu = $("#menu");
-    var nav = $("#menu > #nav");
-    var menuIcon = $("#menu-icon, #menu-icon-tablet");
+    gas.innerText = `${gasValues.results[0].value_inc_vat}p on date ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
+  });
+})();
 
-    var menuMin = 99
-    /**
-     * Display the menu on hi-res laptops and desktops.
-     */
-    if ($(document).width() >= 1440) {
-      menu.css("visibility", "visible");
-      menuIcon.addClass("active");
-    }
-
-    /**
-     * Display the menu if the menu icon is clicked.
-     */
-    menuIcon.click(function() {
-      if (menu.css("visibility") === "hidden") {
-        menu.css("visibility", "visible");
-        menuIcon.addClass("active");
-      } else {
-        menu.css("visibility", "hidden");
-        menuIcon.removeClass("active");
-      }
-      return false;
-    });
-
-    /**
-     * Add a scroll listener to the menu to hide/show the navigation links.
-     */
-    if (menu.length) {
-      $(window).on("scroll", function() {
-        var topDistance = menu.offset().top;
-        console.log(topDistance)
-        // hide only the navigation links on desktop
-        if (!nav.is(":visible") && topDistance < menuMin) {
-          nav.show();
-        } else if (nav.is(":visible") && topDistance > menuMin + 1) {
-          nav.hide();
-        }
-
-        // on tablet, hide the navigation icon as well and show a "scroll to top
-        // icon" instead
-        if ( ! $( "#menu-icon" ).is(":visible") && topDistance < menuMin ) {
-          $("#menu-icon-tablet").show();
-          $("#top-icon-tablet").hide();
-        } else if (! $( "#menu-icon" ).is(":visible") && topDistance > menuMin + 1) {
-          $("#menu-icon-tablet").hide();
-          $("#top-icon-tablet").show();
-        }
-      });
-    }
-
-    /**
-     * Show mobile navigation menu after scrolling upwards,
-     * hide it again after scrolling downwards.
-     */
-    if ($( "#footer-post").length) {
-      var lastScrollTop = 0;
-      $(window).on("scroll", function() {
-        var topDistance = $(window).scrollTop();
-
-        if (topDistance > lastScrollTop){
-          // downscroll -> show menu
-          $("#footer-post").hide();
-        } else {
-          // upscroll -> hide menu
-          $("#footer-post").show();
-        }
-        lastScrollTop = topDistance;
-
-        // close all submenu"s on scroll
-        $("#nav-footer").hide();
-        $("#toc-footer").hide();
-        $("#share-footer").hide();
-
-        // show a "navigation" icon when close to the top of the page, 
-        // otherwise show a "scroll to the top" icon
-        if (topDistance < menuMin) {
-          $("#actions-footer > #top").hide();
-        } else if (topDistance > menuMin + 1) {
-          $("#actions-footer > #top").show();
-        }
-      });
-    }
-  }
-});
