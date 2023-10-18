@@ -39,3 +39,8 @@ body {
 .content span {
   font-weight: 500;
 }
+
+.chart {
+  padding-top: 10px;
+  border: 1px black;
+}

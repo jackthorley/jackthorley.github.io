@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="Developer Nuggets">
   <meta property="og:description" content="Blah blah">
   <meta property="og:locale" content="en">
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <title>Octo Rates</title>
   <link rel="stylesheet" href="/css/style.css">
@@ -29,19 +29,32 @@
       <div class="title"> East Midlands</div>
       <div class="content elec">
         Electric: <span id="elec"></span>
+        <div class="chart">
+          <canvas id="elecChart"></canvas>
+        </div>
       </div>
       <div class="content gas">
         Gas: <span id="gas"></span>
+        <div class="chart">
+          <canvas id="gasChart"></canvas>
+        </div>
       </div>
+
     </div>
 
     <div class="wrapper center">
       <div class="title"> Yorkshire</div>
       <div class="content elec">
         Electric: <span id="elecY"></span>
+        <div class="chart">
+          <canvas id="elecYChart"></canvas>
+        </div>
       </div>
       <div class="content gas">
         Gas: <span id="gasY"></span>
+        <div class="chart">
+          <canvas id="gasYChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -52,4 +65,4 @@
 </body>
 
 </html>
-<script src="/js/main.js"></script>
+<script type="module" src="/js/main.js"></script>
