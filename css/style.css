@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Fira Code', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  max-width: 900px;
+  padding: 1rem 3rem;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+  font-size: larger;
+  background-color: beige;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.content {
+  padding: 20px;
+}
+
+.gas {
+  background-color: blueviolet;
+  color: white;
+}
+
+.content span {
+  font-weight: 500;
+}
