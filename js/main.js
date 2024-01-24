@@ -85,7 +85,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasChart", last10, '#000000', 4)
+    createChart("gasChart", last10, '#000000', 3.5)
   });
 
 
@@ -104,7 +104,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasYChart", last10, '#000000', 4)
+    createChart("gasYChart", last10, '#000000', 3.5)
   });
 
 
@@ -123,7 +123,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasYYChart", last10, '#000000', 4)
+    createChart("gasYYChart", last10, '#000000', 3.5)
   });
 
 
@@ -142,7 +142,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasNewChart", last10, '#000000', 4)
+    createChart("gasNewChart", last10, '#000000', 3.5)
   });
 })();
 
