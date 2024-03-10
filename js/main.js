@@ -69,64 +69,6 @@
     );
   };
 
-  getElec("B").then(elecValues => {
-    var elec = document.getElementById("elec")
-    var date = new Date(elecValues.results[0].valid_from).toDateString();
-
-    elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-
-    var last10 = elecValues.results.slice(0, 10).reverse();
-    createChart("elecChart", last10, '#FFB1C1', 10)
-  });
-
-  getGas("B").then(gasValues => {
-    var gas = document.getElementById("gas")
-    var date = new Date(gasValues.results[0].valid_from).toDateString();
-
-    gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-    var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasChart", last10, '#000000', 3.5)
-  });
-
-
-  getElec("M").then(elecValues => {
-    var elec = document.getElementById("elecY")
-    var date = new Date(elecValues.results[0].valid_from).toDateString();
-
-    elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-    var last10 = elecValues.results.slice(0, 10).reverse();
-    createChart("elecYChart", last10, '#FFB1C1', 10)
-  });
-
-  getGas("M").then(gasValues => {
-    var gas = document.getElementById("gasY")
-    var date = new Date(gasValues.results[0].valid_from).toDateString();
-
-    gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-    var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasYChart", last10, '#000000', 3.5)
-  });
-
-
-  getElec("F").then(elecValues => {
-    var elec = document.getElementById("elecYY")
-    var date = new Date(elecValues.results[0].valid_from).toDateString();
-
-    elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-    var last10 = elecValues.results.slice(0, 10).reverse();
-    createChart("elecYYChart", last10, '#FFB1C1', 10)
-  });
-
-  getGas("F").then(gasValues => {
-    var gas = document.getElementById("gasYY")
-    var date = new Date(gasValues.results[0].valid_from).toDateString();
-
-    gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
-    var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasYYChart", last10, '#000000', 3.5)
-  });
-
-
   getNewElec("F").then(elecValues => {
     var elec = document.getElementById("elecNew")
     var date = new Date(elecValues.results[0].valid_from).toDateString();
