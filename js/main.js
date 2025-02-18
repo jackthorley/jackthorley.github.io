@@ -12,26 +12,27 @@
     }
   };
 
-  async function getElec(region) {
-    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-FLEX-22-11-25/electricity-tariffs/E-1R-SILVER-FLEX-22-11-25-${region}/standard-unit-rates/`);
+  //24-12-31
+  async function getElec(region, product = "22-11-25") {
+    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-FLEX-${product}/electricity-tariffs/E-1R-SILVER-FLEX-${product}-${region}/standard-unit-rates/`);
     const elec = await response.json();
     return elec;
   }
 
-  async function getGas(region) {
-    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-FLEX-22-11-25/gas-tariffs/G-1R-SILVER-FLEX-22-11-25-${region}/standard-unit-rates/`);
+  async function getGas(region, product = "22-11-25") {
+    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-FLEX-${product}/gas-tariffs/G-1R-SILVER-FLEX-${product}-${region}/standard-unit-rates/`);
     const elec = await response.json();
     return elec;
   }
 
-  async function getNewElec(region) {
-    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-BB-23-12-06/electricity-tariffs/E-1R-SILVER-BB-23-12-06-${region}/standard-unit-rates/`);
+  async function getNewElec(region, product = "23-12-06") {
+    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-BB-${product}/electricity-tariffs/E-1R-SILVER-BB-${product}-${region}/standard-unit-rates/`);
     const elec = await response.json();
     return elec;
   }
 
-  async function getNewGas(region) {
-    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-BB-23-12-06/gas-tariffs/G-1R-SILVER-BB-23-12-06-${region}/standard-unit-rates/`);
+  async function getNewGas(region, product = "23-12-06") {
+    const response = await fetch(`https://api.octopus.energy/v1/products/SILVER-BB-${product}/gas-tariffs/G-1R-SILVER-BB-${product}-${region}/standard-unit-rates/`);
     const elec = await response.json();
     return elec;
   }
@@ -85,6 +86,24 @@
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
     createChart("gasNewChart", last10, '#000000', 3.5)
+  });
+
+  getNewElec("F", "24-12-31").then(elecValues => {
+    var elec = document.getElementById("elecNew2")
+    var date = new Date(elecValues.results[0].valid_from).toDateString();
+
+    elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
+    var last10 = elecValues.results.slice(0, 10).reverse();
+    createChart("elecNew2Chart", last10, '#FFB1C1', 10)
+  });
+
+  getNewGas("F", "24-12-31").then(gasValues => {
+    var gas = document.getElementById("gasNew2")
+    var date = new Date(gasValues.results[0].valid_from).toDateString();
+
+    gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
+    var last10 = gasValues.results.slice(0, 10).reverse();
+    createChart("gasNew2Chart", last10, '#000000', 3.5)
   });
 })();
 
