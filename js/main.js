@@ -38,7 +38,7 @@
   }
 
 
-  function createChart(element, data, color, min = 0) {
+  function createChart(element, data, cap, color, min = 0) {
     new Chart(
       document.getElementById(element),
       {
@@ -50,10 +50,23 @@
               label: 'Prices Over Time',
               data: data.map(row => row.value_inc_vat),
               backgroundColor: color,
+              order: 1
+            },
+            {
+              label: 'Cap',
+              data: cap,
+              backgroundColor: "#7770df",
+              borderColor: "#7770df",
+              borderWidth: 2,
+              type: 'line',
+              order: 0,
+              pointRadius: 0
             }
           ]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: true,
           scales: {
             y: {
               min: min
@@ -76,7 +89,7 @@
 
     elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = elecValues.results.slice(0, 10).reverse();
-    createChart("elecNewChart", last10, '#FFB1C1', 10)
+    createChart("elecNewChart", last10, [], '#FFB1C1', 10)
   });
 
   getNewGas("F").then(gasValues => {
@@ -85,7 +98,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasNewChart", last10, '#000000', 3.5)
+    createChart("gasNewChart", last10, [], '#000000', 3.5)
   });
 
   getNewElec("F", "24-12-31").then(elecValues => {
@@ -94,7 +107,7 @@
 
     elec.innerText = `${elecValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = elecValues.results.slice(0, 10).reverse();
-    createChart("elecNew2Chart", last10, '#FFB1C1', 10)
+    createChart("elecNew2Chart", last10, [23.86,23.86,23.86,23.86,23.86,23.86,23.86,23.86,23.86,23.86], '#FFB1C1', 10)
   });
 
   getNewGas("F", "24-12-31").then(gasValues => {
@@ -103,7 +116,7 @@
 
     gas.innerText = `${gasValues.results[0].value_inc_vat}p on ${date.toLocaleString('en-GB', { timeZone: 'UTC' })}`
     var last10 = gasValues.results.slice(0, 10).reverse();
-    createChart("gasNew2Chart", last10, '#000000', 3.5)
+    createChart("gasNew2Chart", last10, [6.31, 6.31,6.31,6.31,6.31,6.31,6.31,6.31,6.31,6.31], '#000000', 3.5)
   });
 })();
 
