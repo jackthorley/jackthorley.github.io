@@ -1,7 +1,8 @@
 twitch-videoad.js text/javascript
 (function() {
     if ( /(^|\.)twitch\.tv$/.test(document.location.hostname) === false ) { return; }
-    var ourTwitchAdSolutionsVersion = 9;// Used to prevent conflicts with outdated versions of the scripts
+    'use strict';
+    var ourTwitchAdSolutionsVersion = 11;// Used to prevent conflicts with outdated versions of the scripts
     if (typeof unsafeWindow === 'undefined') {
         unsafeWindow = window;
     }
@@ -327,12 +328,15 @@ twitch-videoad.js text/javascript
                                 //Here we check the m3u8 for any ads and also try fallback player types if needed.
                                 var responseText = await response.text();
                                 var weaverText = null;
-                                weaverText = await processM3U8(url, responseText, realFetch, PlayerType2);
+                                var fallbackWeaverText = weaverText = await processM3U8(url, responseText, realFetch, PlayerType2);
                                 if (weaverText.includes(AdSignifier)) {
                                     weaverText = await processM3U8(url, responseText, realFetch, PlayerType3);
                                 }
                                 if (weaverText.includes(AdSignifier)) {
                                     weaverText = await processM3U8(url, responseText, realFetch, PlayerType4);
+                                }
+                                if (weaverText.includes(AdSignifier)) {
+                                    weaverText = fallbackWeaverText;
                                 }
                                 resolve(new Response(weaverText));
                             } else {
@@ -688,7 +692,7 @@ twitch-videoad.js text/javascript
     }
     function getAccessToken(channelName, playerType) {
         var body = null;
-        var templateQuery = 'query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: "ios", playerBackend: "mediaplayer", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: "ios", playerBackend: "mediaplayer", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}';
+        var templateQuery = 'query PlaybackAccessToken_Template($login: String!, $isLive: Boolean!, $vodID: ID!, $isVod: Boolean!, $playerType: String!) {  streamPlaybackAccessToken(channelName: $login, params: {platform: "android", playerBackend: "mediaplayer", playerType: $playerType}) @include(if: $isLive) {    value    signature    __typename  }  videoPlaybackAccessToken(id: $vodID, params: {platform: "android", playerBackend: "mediaplayer", playerType: $playerType}) @include(if: $isVod) {    value    signature    __typename  }}';
         body = {
             operationName: 'PlaybackAccessToken_Template',
             query: templateQuery,
